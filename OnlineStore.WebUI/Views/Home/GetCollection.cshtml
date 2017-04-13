@@ -1,0 +1,14 @@
+﻿@model IEnumerable<OnlineStore.Domain.Categories>
+
+@{
+    ViewBag.Title = "GetCollection";
+    
+}
+
+<h2>GetCollection</h2>
+
+@foreach(var category in Model)
+{
+    <p>@category.CategoryName</p>
+}
+
