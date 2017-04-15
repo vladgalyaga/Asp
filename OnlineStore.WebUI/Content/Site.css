@@ -16,3 +16,25 @@ textarea {
     max-width: 280px;
 }
 
+.wrapper {
+    margin-top: 60px;
+}
+
+.categories-menu {
+    width: 300px;
+    position: fixed;
+    top: 50px;
+    left: 0;
+    bottom: 0;    
+    background: #73a0d1;
+}
+
+.body-wrapper {
+    margin-left: 300px;
+}
+
+.categories-menu ul li a {
+    font: 16px Arial, sans-serif;
+    color: #000;
+    text-decoration: none;
+}

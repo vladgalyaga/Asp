@@ -1,0 +1,19 @@
+﻿<div class="categories-menu">
+    <ul class="nav nav-list">
+        <li class="nav-header">Categories</li>
+        <li class="active">
+            @Html.ActionLink("Confections", "Products", "Home", new { categoryName = "confections" }, null)
+        </li>
+        <li>
+            @Html.ActionLink("Beverages", "Products", "Home", new { categoryName = "beverages" }, null)
+        </li>
+    </ul>
+    @*<ul class="nav nav-pills nav-stacked">
+        <li>
+            @Html.ActionLink("Confections", "Products", "Home", new { categoryName = "confections" }, null)
+        </li>
+        <li>
+            @Html.ActionLink("Beverages", "Products", "Home", new { categoryName = "beverages" }, null)
+        </li>
+    </ul>*@
+</div>

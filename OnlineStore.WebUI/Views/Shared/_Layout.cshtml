@@ -9,39 +9,38 @@
     <script src="~/Scripts/modernizr-2.6.2.js"></script>
 </head>
 <body>
-    <div class="navbar navbar navbar-fixed-top">
-        <div class="container">
+    <div class="navbar navbar-header navbar-fixed-top">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                 @*  @Html.ActionLink("Northwind", "Index",XhtmlMobileDocType "Home", new { area = "" }, new { @class = "navbar-brand" })*@ 
+                    <img id="img_logo" alt="Logo" src="~/Content/Resurs/emblem.png" height="50" />
+                </div>
 
-            <div class="navbar-header">
-                
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Northwind", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            
-
-            <div class="">
-                <img id="img_logo" alt="Logo" src="~/Content/Resurs/emblem.png" />
-            </div>
-            
-
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                </ul>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav"></ul>
+                </div>
             </div>
         </div>
     </div>
-
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>@DateTime.Now.Day.@DateTime.Now.Month.@DateTime.Now.Year</p>
-        </footer>
+    <div class="wrapper">
+        <div class="row">
+            @Html.Partial("_CategoriesView")
+            <div class="body-wrapper">
+                <div class="body-content">
+                    @RenderBody()
+                </div>
+            </div>
+        </div>
     </div>
+    <footer>
+        <p>@DateTime.Now.Day.@DateTime.Now.Month.@DateTime.Now.Year</p>
+    </footer>
 
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
