@@ -1,0 +1,51 @@
+﻿@model OnlineStore.Domain.Products
+
+<div class="wrapper">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="content">
+                <div class="product-logo">
+                    <img src="@Url.Action("GetImageProductById", "Home", new { productID = Model.ProductID })">
+                </div>
+                <label>Price: @Html.DisplayFor(x=>x.UnitPrice)</label>
+                <button class="btn btn-default pull-right">Buy</button>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="content">
+                <h3 class="title">
+                    @Html.DisplayFor(x=>x.ProductName)
+                </h3>
+                <ul class="properties">
+                    <li>
+                        <span>Quantity per unit: </span>
+
+                       @Html.DisplayFor(x => x.QuantityPerUnit)
+                    </li>
+                    <li>
+                        <span>Unit in stock: </span>
+                        @Html.DisplayFor(x => x.UnitsInStock)
+                    </li>
+                    <li>
+                        <span>Units on order: </span>
+                        @Html.DisplayFor(x => x.UnitsOnOrder)
+                    </li>
+                    <li>
+                        <span>Discounted: </span>
+                        @Html.DisplayFor(x => x.Discontinued)
+                    </li>
+                    <li>
+                        <span>Reorder level: </span>
+                        @Html.DisplayFor(x => x.ReorderLevel)
+                    </li>
+                    @*
+    <li>
+        <span>Description: </span>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa ad, pariatur! A voluptatum molestias, aut hic, incidunt nobis, iste minima ab omnis doloribus doloremque, repellat nam aspernatur sunt neque vero id eos! Repellendus, architecto. Optio ipsa facere perspiciatis sit sed eos facilis, temporibus eveniet obcaecati deleniti asperiores voluptatibus expedita consequuntur, aliquid consequatur impedit sapiente iusto non magnam et dignissimos? Nam nemo vero, veniam ullam magni quia harum sequi aperiam, odit molestias ipsa laboriosam voluptatum tenetur repellat facilis, velit libero quo. Labore, dignissimos iste, quasi distinctio hic dolorem adipisci ipsum magni tenetur odit explicabo at itaque deleniti ratione saepe illum repellat!
+    </li>
+                    *@
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

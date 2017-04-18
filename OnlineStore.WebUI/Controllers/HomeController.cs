@@ -11,7 +11,7 @@ namespace OnlineStore.WebUI.Controllers
 {
     public class HomeController : Controller
     {
-        
+
         private IStoreRepository m_storeRepository;
 
         string s = Directory.GetCurrentDirectory();
@@ -35,18 +35,9 @@ namespace OnlineStore.WebUI.Controllers
 
         public ActionResult Products(string categoryName = "Confections")
         {
-            try
-            {
-                var category = m_storeRepository.GetCategoryByName(categoryName);
-                var products = category.Products;
-                return View(products);
-            }
-            catch { }
-
-            return View();
-
+                return View(m_storeRepository.GetCategoryByName(categoryName).Products);
         }
-        public FileContentResult GetImage(int productId)
+        public FileContentResult GetImageProductById(int productId)
         {
             Products prod = m_storeRepository.GetProduct(productId);
             if (prod.Photo != null)
@@ -57,6 +48,10 @@ namespace OnlineStore.WebUI.Controllers
             {
                 return new FileContentResult(m_photo, "image/jpeg");
             }
+        }
+        public ActionResult Product(int productId)
+        {
+            return View(m_storeRepository.GetProduct(productId));
         }
         //public PartialViewResult GetCategories()
         //{
