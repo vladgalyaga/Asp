@@ -9,18 +9,18 @@ namespace OnlineStore.Domain
 {
     public class StoreRepository : IDisposable, IStoreRepository
     {
-        static private NorthwindEntities db = new NorthwindEntities();
+        static private NorthwindDbContext db = new NorthwindDbContext();
 
         public void Dispose()
         {
-            
+
             ((IDisposable)db).Dispose();
         }
 
         public List<Categories> GetAllCategories()
         {
             return db.Categories.ToList();
-          
+
         }
         public Categories GetCategoryByName(string categoryName)
         {
