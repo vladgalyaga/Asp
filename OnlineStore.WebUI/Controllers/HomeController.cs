@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -35,11 +36,13 @@ namespace OnlineStore.WebUI.Controllers
 
         public ActionResult Products(string categoryName = "Confections")
         {
-                return View(m_storeRepository.GetCategoryByName(categoryName).Products);
+            var category = m_storeRepository.GetCategoryByName(categoryName);
+
+                return View(category.Products);
         }
-        public FileContentResult GetImageProductById(int productId)
+        public  FileContentResult GetImageProductById(int productId)
         {
-            Products prod = m_storeRepository.GetProduct(productId);
+            Products prod =  m_storeRepository.GetProduct(productId);
             if (prod.Photo != null)
             {
                 return new FileContentResult(prod.Photo, "image/jpeg");

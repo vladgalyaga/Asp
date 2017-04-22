@@ -10,8 +10,9 @@ namespace OnlineStore.Domain
     public interface IStoreRepository
     {
         void Dispose();
-        List<Categories> GetAllCategories();
+       List<Categories> GetAllCategories();
         Categories GetCategoryByName(string categoryName);
         Products GetProduct(int productId);
     }
 }
+    

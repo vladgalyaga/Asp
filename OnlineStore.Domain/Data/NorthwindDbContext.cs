@@ -12,6 +12,11 @@ namespace OnlineStore.Domain
         public NorthwindDbContext()
             : base("name=Northwind")
         {
+
+        }
+        public static NorthwindDbContext Create()
+        {
+            return new NorthwindDbContext();
         }
 
         public virtual DbSet<Categories> Categories { get; set; }

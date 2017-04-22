@@ -32,6 +32,7 @@ namespace OnlineStore.WebUI.Infrastructure
         {
             // Здесь размещаются привязки
             kernel.Bind<IStoreRepository>().To<StoreRepository>();
+
         }
     }
 }

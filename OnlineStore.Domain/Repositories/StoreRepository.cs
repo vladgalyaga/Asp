@@ -9,7 +9,15 @@ namespace OnlineStore.Domain
 {
     public class StoreRepository : IDisposable, IStoreRepository
     {
-        static private NorthwindDbContext db = new NorthwindDbContext();
+        //static private NorthwindDbContext db = new NorthwindDbContext();
+        private  NorthwindDbContext db  = new NorthwindDbContext();
+     
+
+        public StoreRepository(NorthwindDbContext dbContext)
+           
+        {
+            this.db = dbContext;
+        }
 
         public void Dispose()
         {
@@ -19,17 +27,17 @@ namespace OnlineStore.Domain
 
         public List<Categories> GetAllCategories()
         {
-            return db.Categories.ToList();
+            return  db.Categories.ToList();
 
         }
-        public Categories GetCategoryByName(string categoryName)
+        public  Categories GetCategoryByName(string categoryName)
         {
-            return db.Categories.FirstOrDefault(x => x.CategoryName == categoryName);
+            return  db.Categories.FirstOrDefault(x => x.CategoryName == categoryName);
         }
-
-        public Products GetProduct(int productId)
+        
+        public  Products GetProduct(int productId)
         {
-            return db.Products.FirstOrDefault(x => x.ProductID == productId);
+            return  db.Products.FirstOrDefault(x => x.ProductID == productId);
         }
     }
 }

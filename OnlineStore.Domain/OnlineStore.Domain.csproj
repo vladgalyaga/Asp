@@ -87,26 +87,33 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Base\BaseUnitOfWork.cs" />
+    <Compile Include="Base\EntityRepository.cs" />
     <Compile Include="Entity\Categories.cs" />
     <Compile Include="Entity\CustomerDemographics.cs" />
     <Compile Include="Entity\Customers.cs" />
     <Compile Include="Entity\Employees.cs" />
-    <Compile Include="Entity\UserRole.cs" />
-    <Compile Include="IStoreRepository.cs" />
-    <Compile Include="Entity\Logins.cs" />
+    <Compile Include="Identity\UserRole.cs" />
+    <Compile Include="Interfaces\IEntitiesDbContext.cs" />
+    <Compile Include="Interfaces\IKeyable.cs" />
+    <Compile Include="Interfaces\IRepository.cs" />
+    <Compile Include="Interfaces\ISaveable.cs" />
+    <Compile Include="Interfaces\IStoreRepository.cs" />
+    <Compile Include="Identity\Logins.cs" />
     <Compile Include="Data\NorthwindDbContext.cs" />
     <Compile Include="Entity\Orders.cs" />
     <Compile Include="Entity\Order_Details.cs" />
     <Compile Include="Entity\Products.cs" />
+    <Compile Include="Interfaces\IUnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Entity\Region.cs" />
-    <Compile Include="Entity\Roles.cs" />
+    <Compile Include="Identity\Roles.cs" />
     <Compile Include="Entity\Shippers.cs" />
     <Compile Include="Repositories\StoreRepository.cs" />
     <Compile Include="Entity\Suppliers.cs" />
     <Compile Include="Entity\Territories.cs" />
-    <Compile Include="Entity\UserClaims.cs" />
-    <Compile Include="Entity\Users.cs" />
+    <Compile Include="Identity\UserClaims.cs" />
+    <Compile Include="Identity\Users.cs" />
     <Compile Include="Repositories\UsersRepository.cs" />
   </ItemGroup>
   <ItemGroup>

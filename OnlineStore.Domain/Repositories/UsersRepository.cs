@@ -15,5 +15,9 @@ namespace OnlineStore.Domain
             : base(context)
         {
         }
+        public async void AddUser(Users user)
+        {
+            Context.
+        }
     }
 }
