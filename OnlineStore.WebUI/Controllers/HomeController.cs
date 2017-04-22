@@ -1,4 +1,5 @@
 ﻿using OnlineStore.Domain;
+using OnlineStore.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -13,11 +14,11 @@ namespace OnlineStore.WebUI.Controllers
     public class HomeController : Controller
     {
 
-        private IStoreRepository m_storeRepository;
+        private IRepository<Products> m_storeRepository;
 
         string s = Directory.GetCurrentDirectory();
         byte[] m_photo = System.IO.File.ReadAllBytes(@"C: \Users\zviad\OneDrive\Documents\Visual Studio 2015\Projects\OnlineStore\OnlineStore.WebUI\Content\Resurs\emblem.png");
-        public HomeController(IStoreRepository storeRepository)
+        public HomeController(IRepository storeRepository)
         {
             m_storeRepository = storeRepository;
 

@@ -10,7 +10,7 @@ namespace OnlineStore.Domain
     public class StoreRepository : IDisposable, IStoreRepository
     {
         //static private NorthwindDbContext db = new NorthwindDbContext();
-        private  NorthwindDbContext db  = new NorthwindDbContext();
+        private NorthwindDbContext db;// = new NorthwindDbContext();
      
 
         public StoreRepository(NorthwindDbContext dbContext)

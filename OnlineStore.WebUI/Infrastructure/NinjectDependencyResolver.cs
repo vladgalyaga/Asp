@@ -1,5 +1,6 @@
 ﻿using Ninject;
 using OnlineStore.Domain;
+using OnlineStore.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,8 +32,9 @@ namespace OnlineStore.WebUI.Infrastructure
         private void AddBindings()
         {
             // Здесь размещаются привязки
-            kernel.Bind<IStoreRepository>().To<StoreRepository>();
-
+          //  kernel.Bind<IStoreRepository>().To<StoreRepository>();
+            kernel.Bind<IEntitiesDbContext>().To<NorthwindDbContext>().WithConstructorArgument("name=Northwind");
+            kernel.Bind<IUnitOfWork>().To<UnitOfWork>();
         }
     }
 }

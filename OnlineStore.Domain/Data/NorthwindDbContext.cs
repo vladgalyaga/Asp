@@ -6,17 +6,21 @@ namespace OnlineStore.Domain
     using System.Linq;
     using Entity;
     using Microsoft.AspNet.Identity.EntityFramework;
+    using Interfaces;
+    using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Metadata.Edm;
 
-    public partial class NorthwindDbContext : IdentityDbContext<Users, Roles, int, Logins, UserRole, UserClaims>
+    public partial class NorthwindDbContext : IdentityDbContext<Users, Roles, int, Logins, UserRole, UserClaims>, IEntitiesDbContext
     {
-        public NorthwindDbContext()
-            : base("name=Northwind")
+        private static readonly object Lock = new object();
+        public NorthwindDbContext(string nameOrConnectionString)
+            : base(nameOrConnectionString)
         {
-
         }
+
         public static NorthwindDbContext Create()
         {
-            return new NorthwindDbContext();
+            return new NorthwindDbContext("name=Northwind");
         }
 
         public virtual DbSet<Categories> Categories { get; set; }
@@ -110,5 +114,59 @@ namespace OnlineStore.Domain
                 .Property(e => e.TerritoryDescription)
                 .IsFixedLength();
         }
+
+        bool IEntitiesDbContext.IsSetExist<TEntity>()
+        {
+            return this.IsSetExist<TEntity>();
+        }
+
+        private bool IsSetExist<TEntity>() where TEntity : class
+        {
+            string entityName = typeof(TEntity).Name;
+            var objectContext = ((IObjectContextAdapter)this).ObjectContext;
+
+            return objectContext.MetadataWorkspace
+                .GetItems<EntityType>(DataSpace.CSpace)
+                .Any(p => p.Name.Equals(entityName));
+        }
+
+        IDbSet<TEntity> IEntitiesDbContext.TryGetSet<TEntity>()
+        {
+            if (!IsSetExist<TEntity>())
+            {
+                return null;
+            }
+
+            return base.Set<TEntity>();
+        }
+
+        void IEntitiesDbContext.CreateEntity<TEntity>(TEntity entity)
+        {
+            lock (Lock)
+            {
+                this.Set<TEntity>().Add(entity);
+            }
+        }
+
+        void IEntitiesDbContext.UpdateEntity<TEntity>(TEntity entity)
+        {
+            lock (Lock)
+            {
+                var result = Set<TEntity>().FirstOrDefault(p => p.Id.Equals(entity.Id));
+                if (result != null)
+                {
+                    Entry(result).CurrentValues.SetValues(entity);
+                }
+            }
+        }
+
+        void IEntitiesDbContext.RemoveEntity<TEntity>(TEntity entity)
+        {
+            lock (Lock)
+            {
+                this.Set<TEntity>().Remove(entity);
+            }
+        }
+
     }
 }

@@ -88,7 +88,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Base\BaseUnitOfWork.cs" />
-    <Compile Include="Base\EntityRepository.cs" />
+    <Compile Include="EntityRepository.cs" />
     <Compile Include="Entity\Categories.cs" />
     <Compile Include="Entity\CustomerDemographics.cs" />
     <Compile Include="Entity\Customers.cs" />
@@ -115,6 +115,7 @@
     <Compile Include="Identity\UserClaims.cs" />
     <Compile Include="Identity\Users.cs" />
     <Compile Include="Repositories\UsersRepository.cs" />
+    <Compile Include="UnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />

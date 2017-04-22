@@ -13,8 +13,8 @@ namespace OnlineStore.WebUI
     {
         public void ConfigureAuth(IAppBuilder app)
         {
-
-            app.CreatePerOwinContext<NorthwindDbContext>(NorthwindDbContext.Create);
+          
+             app.CreatePerOwinContext<NorthwindDbContext>(NorthwindDbContext.Create);
             app.CreatePerOwinContext<AppUserManager>(AppUserManager.Create);
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
