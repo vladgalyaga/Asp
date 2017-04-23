@@ -43,10 +43,10 @@ namespace OnlineStore.WebUI.Controllers
 
             return View(category.Products);
         }
-        public async Task<FileContentResult> GetImageProductById(int productId)
+        public FileContentResult GetImageProductById(int Id)
         {
             // Products prod = m_storeRepository.GetProduct(productId);
-            Products prod = await m_productRepository.FindByIdAsync(productId);
+            Products prod =  m_productRepository.FindById(Id);
             if (prod.Photo != null)
             {
                 return new FileContentResult(prod.Photo, "image/jpeg");
@@ -56,9 +56,9 @@ namespace OnlineStore.WebUI.Controllers
                 return new FileContentResult(m_photo, "image/jpeg");
             }
         }
-        public async Task<ActionResult> Product(int productId)
+        public async Task<ActionResult> Product(int Id)
         {
-            var product = await m_productRepository.FindByIdAsync(productId);
+            Products product = await m_productRepository.FindByIdAsync(Id);
             return View(product);
         }
         //public PartialViewResult GetCategories()

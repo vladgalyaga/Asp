@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace OnlineStore.Domain.Interfaces
 {
-  public  interface IRepository<TEntity, TKey> : ISaveable, IDisposable where TEntity : class, IKeyable<TKey>
+    public interface IRepository<TEntity, TKey> : ISaveable, IDisposable
+        where TEntity : class, IKeyable<TKey>
+        
     {
         TEntity GetFirstOrDefaultAsync(Func<TEntity, bool> predicate);
         /// <summary>
@@ -28,14 +30,19 @@ namespace OnlineStore.Domain.Interfaces
         /// <param name="predicate"></param>
         /// <returns></returns>
         Task<IEnumerable<TEntity>> GetWhereAsync(Func<TEntity, bool> predicate);
-       
-  
+
         /// <summary>
         /// Look for an entity
         /// </summary>
         /// <param name="id">Entity's identifier</param>
         /// <returns>Instance of <typeparamref name="TEntity"/> if success, else null</returns>
-        Task<TEntity> FindByIdAsync(int id);
+        TEntity FindById(TKey id);
+        /// <summary>
+        /// Look for an entity
+        /// </summary>
+        /// <param name="id">Entity's identifier</param>
+        /// <returns>Instance of <typeparamref name="TEntity"/> if success, else null</returns>
+        Task<TEntity> FindByIdAsync(TKey id);
 
         /// <summary>
         /// Insert an entity
@@ -53,7 +60,7 @@ namespace OnlineStore.Domain.Interfaces
         /// Delete an entity by it's key
         /// </summary>
         /// <param name="entityId">Entity identifier</param>
-        Task DeleteAsync(int entityId);
+        Task DeleteAsync(TKey entityId);
 
         /// <summary>
         /// Delete an entity

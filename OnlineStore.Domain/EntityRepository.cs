@@ -12,7 +12,9 @@ namespace OnlineStore.Domain
     /// Provides CRUD actions with <typeparamref name="TEntity"/>
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
-    public class EntityRepository<TEntity, TKey> : IRepository<TEntity, TKey> where TEntity : class, IKeyable<TKey>
+    public class EntityRepository<TEntity, TKey> : IRepository<TEntity, TKey>
+           where TEntity : class, IKeyable<TKey>
+     
     {
         private IEntitiesDbContext m_DbContext;
         private bool m_IsDisposed;
@@ -81,9 +83,9 @@ namespace OnlineStore.Domain
         }
 
 
-        public Task<TEntity> FindByIdAsync(int id)
+        public Task<TEntity> FindByIdAsync(TKey id)
         {
-            return DbEntitySet.FirstOrDefaultAsync(p => p.Id.Equals(id));
+            return DbEntitySet.FirstOrDefaultAsync(p => p.Id.ToString().Equals(id.ToString()));
         }
 
         public async Task CreateAsync(TEntity entity)
@@ -104,9 +106,9 @@ namespace OnlineStore.Domain
             await SaveChangesAsync();
 
         }
-        public async Task DeleteAsync(int entityId)
+        public async Task DeleteAsync(TKey entityId)
         {
-            TEntity entity = DbEntitySet.FirstOrDefault(p => p.Id.Equals(entityId));
+            TEntity entity = DbEntitySet.FirstOrDefault(p => p.Id.ToString().Equals(entityId.ToString()));
             await DeleteAsync(entity);
         }
 
@@ -119,5 +121,10 @@ namespace OnlineStore.Domain
             return DbContext.SaveChangesAsync();
         }
 
+        public TEntity FindById(TKey id)
+        {
+           
+            return DbEntitySet.FirstOrDefault(p => p.Id.ToString().Equals(id.ToString()));
+        }
     }
 }
