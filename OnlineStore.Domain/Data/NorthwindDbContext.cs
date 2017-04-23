@@ -48,7 +48,7 @@ namespace OnlineStore.Domain
             modelBuilder.Entity<UserRole>().ToTable("UserRole");
 
             modelBuilder.Entity<CustomerDemographics>()
-                .Property(e => e.CustomerTypeID)
+                .Property(e => e.Id)
                 .IsFixedLength();
 
             modelBuilder.Entity<CustomerDemographics>()
@@ -57,7 +57,7 @@ namespace OnlineStore.Domain
                 .Map(m => m.ToTable("CustomerCustomerDemo").MapLeftKey("CustomerTypeID").MapRightKey("CustomerID"));
 
             modelBuilder.Entity<Customers>()
-                .Property(e => e.CustomerID)
+                .Property(e => e.Id)
                 .IsFixedLength();
 
             modelBuilder.Entity<Employees>()
@@ -115,7 +115,7 @@ namespace OnlineStore.Domain
                 .IsFixedLength();
         }
 
-        bool IEntitiesDbContext.IsSetExist<TEntity>()
+        bool IEntitiesDbContext.IsSetExist<TEntity, Tkey>() 
         {
             return this.IsSetExist<TEntity>();
         }
@@ -130,7 +130,7 @@ namespace OnlineStore.Domain
                 .Any(p => p.Name.Equals(entityName));
         }
 
-        IDbSet<TEntity> IEntitiesDbContext.TryGetSet<TEntity>()
+        IDbSet<TEntity> IEntitiesDbContext.TryGetSet<TEntity, Tkey>()
         {
             if (!IsSetExist<TEntity>())
             {
@@ -140,7 +140,7 @@ namespace OnlineStore.Domain
             return base.Set<TEntity>();
         }
 
-        void IEntitiesDbContext.CreateEntity<TEntity>(TEntity entity)
+        void IEntitiesDbContext.CreateEntity<TEntity, Tkey>(TEntity entity)
         {
             lock (Lock)
             {
@@ -148,7 +148,7 @@ namespace OnlineStore.Domain
             }
         }
 
-        void IEntitiesDbContext.UpdateEntity<TEntity>(TEntity entity)
+        void IEntitiesDbContext.UpdateEntity<TEntity, Tkey>(TEntity entity)
         {
             lock (Lock)
             {
@@ -160,7 +160,7 @@ namespace OnlineStore.Domain
             }
         }
 
-        void IEntitiesDbContext.RemoveEntity<TEntity>(TEntity entity)
+        void IEntitiesDbContext.RemoveEntity<TEntity, Tkey>(TEntity entity)
         {
             lock (Lock)
             {

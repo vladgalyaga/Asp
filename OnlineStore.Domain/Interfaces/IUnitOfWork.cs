@@ -17,6 +17,6 @@ namespace OnlineStore.Domain.Interfaces
         /// <typeparam name="TEntity">Entity type, for which repository is required</typeparam>
         /// <typeparam name="TKey">Entity's id type</typeparam>
         /// <returns></returns>
-        IRepository<TEntity> GetRepository<TEntity>() where TEntity : class, IKeyable;
+        IRepository<TEntity, TKey> GetRepository<TEntity, TKey>() where TEntity : class, IKeyable<TKey>;
     }
 }

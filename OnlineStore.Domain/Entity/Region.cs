@@ -1,5 +1,6 @@
 namespace OnlineStore.Domain
 {
+    using Interfaces;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -7,7 +8,7 @@ namespace OnlineStore.Domain
     using System.Data.Entity.Spatial;
 
     [Table("Region")]
-    public partial class Region
+    public partial class Region:IKeyable<int>
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Region()
@@ -15,8 +16,12 @@ namespace OnlineStore.Domain
             Territories = new HashSet<Territories>();
         }
 
+        //[DatabaseGenerated(DatabaseGeneratedOption.None)]
+        //public int RegionID { get; set; }
+
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int RegionID { get; set; }
+        [Column("RegionID")]
+        public int Id { get; set; }
 
         [Required]
         [StringLength(50)]

@@ -14,14 +14,16 @@ namespace OnlineStore.WebUI.Controllers
     public class HomeController : Controller
     {
 
-        private IRepository<Products> m_storeRepository;
+        private IRepository<Products, int> m_productRepository;
+
+        private IRepository<Categories, int> m_categoryRepository;
 
         string s = Directory.GetCurrentDirectory();
         byte[] m_photo = System.IO.File.ReadAllBytes(@"C: \Users\zviad\OneDrive\Documents\Visual Studio 2015\Projects\OnlineStore\OnlineStore.WebUI\Content\Resurs\emblem.png");
-        public HomeController(IRepository storeRepository)
+        public HomeController(IUnitOfWork unitOfWork)
         {
-            m_storeRepository = storeRepository;
-
+            m_productRepository = unitOfWork.GetRepository<Products, int>();
+            m_categoryRepository = unitOfWork.GetRepository<Categories, int>();
         }
 
         //public ActionResult GetCollection()
@@ -37,13 +39,14 @@ namespace OnlineStore.WebUI.Controllers
 
         public ActionResult Products(string categoryName = "Confections")
         {
-            var category = m_storeRepository.GetCategoryByName(categoryName);
+            Categories category =  m_categoryRepository.GetFirstOrDefaultAsync(x => x.CategoryName.ToLower() == categoryName.ToLower());
 
-                return View(category.Products);
+            return View(category.Products);
         }
-        public  FileContentResult GetImageProductById(int productId)
+        public async Task<FileContentResult> GetImageProductById(int productId)
         {
-            Products prod =  m_storeRepository.GetProduct(productId);
+            // Products prod = m_storeRepository.GetProduct(productId);
+            Products prod = await m_productRepository.FindByIdAsync(productId);
             if (prod.Photo != null)
             {
                 return new FileContentResult(prod.Photo, "image/jpeg");
@@ -53,9 +56,10 @@ namespace OnlineStore.WebUI.Controllers
                 return new FileContentResult(m_photo, "image/jpeg");
             }
         }
-        public ActionResult Product(int productId)
+        public async Task<ActionResult> Product(int productId)
         {
-            return View(m_storeRepository.GetProduct(productId));
+            var product = await m_productRepository.FindByIdAsync(productId);
+            return View(product);
         }
         //public PartialViewResult GetCategories()
         //{

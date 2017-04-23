@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace OnlineStore.Domain.Interfaces
 {
-    public interface IKeyable
+    public interface IKeyable <TKey>
     { 
         /// <summary>
       /// Gets object's id
       /// </summary>
-        int Id { get; }
+        TKey Id { get; }
     }
 }

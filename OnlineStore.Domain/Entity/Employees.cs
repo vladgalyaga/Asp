@@ -1,12 +1,13 @@
 namespace OnlineStore.Domain
 {
+    using Interfaces;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class Employees
+    public partial class Employees : IKeyable<int>
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Employees()
@@ -16,8 +17,12 @@ namespace OnlineStore.Domain
             Territories = new HashSet<Territories>();
         }
 
+        //[Key]
+        //public int EmployeeID { get; set; }
+
         [Key]
-        public int EmployeeID { get; set; }
+        [Column("EmployeeID")]
+        public int Id { get; set; }
 
         [Required]
         [StringLength(20)]

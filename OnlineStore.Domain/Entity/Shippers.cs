@@ -1,12 +1,13 @@
 namespace OnlineStore.Domain
 {
+    using Interfaces;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class Shippers
+    public partial class Shippers:IKeyable<int>
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Shippers()
@@ -14,8 +15,12 @@ namespace OnlineStore.Domain
             Orders = new HashSet<Orders>();
         }
 
+        //[Key]
+        //public int ShipperID { get; set; }
+
         [Key]
-        public int ShipperID { get; set; }
+        [Column("ShipperID")]
+        public int Id { get; set; }
 
         [Required]
         [StringLength(40)]

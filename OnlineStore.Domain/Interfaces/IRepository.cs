@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace OnlineStore.Domain.Interfaces
 {
-  public  interface IRepository<TEntity> : ISaveable, IDisposable where TEntity : class, IKeyable
+  public  interface IRepository<TEntity, TKey> : ISaveable, IDisposable where TEntity : class, IKeyable<TKey>
     {
-
+        TEntity GetFirstOrDefaultAsync(Func<TEntity, bool> predicate);
         /// <summary>
         /// Returns true if entity exist in the repository
         /// </summary>
@@ -28,7 +28,8 @@ namespace OnlineStore.Domain.Interfaces
         /// <param name="predicate"></param>
         /// <returns></returns>
         Task<IEnumerable<TEntity>> GetWhereAsync(Func<TEntity, bool> predicate);
-
+       
+  
         /// <summary>
         /// Look for an entity
         /// </summary>

@@ -12,7 +12,7 @@ namespace OnlineStore.Domain
     /// Provides CRUD actions with <typeparamref name="TEntity"/>
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
-    public class EntityRepository<TEntity> : IRepository<TEntity> where TEntity : class, IKeyable
+    public class EntityRepository<TEntity, TKey> : IRepository<TEntity, TKey> where TEntity : class, IKeyable<TKey>
     {
         private IEntitiesDbContext m_DbContext;
         private bool m_IsDisposed;
@@ -34,7 +34,7 @@ namespace OnlineStore.Domain
                     throw new ArgumentNullException(nameof(DbContext));
                 }
 
-                IDbSet<TEntity> dbSet = value.TryGetSet<TEntity>();
+                IDbSet<TEntity> dbSet = value.TryGetSet<TEntity, TKey>();
                 if (dbSet == null)
                 {
                     throw new ArgumentException
@@ -75,6 +75,11 @@ namespace OnlineStore.Domain
         {
             return Task.Run(() => DbEntitySet.Where(predicate));
         }
+        public TEntity GetFirstOrDefaultAsync(Func<TEntity, bool> predicate)
+        {
+            return DbEntitySet.FirstOrDefault(predicate);
+        }
+
 
         public Task<TEntity> FindByIdAsync(int id)
         {
@@ -83,19 +88,19 @@ namespace OnlineStore.Domain
 
         public async Task CreateAsync(TEntity entity)
         {
-            DbContext.CreateEntity(entity);
+            DbContext.CreateEntity<TEntity, TKey>(entity);
             await SaveChangesAsync();
         }
 
         public async Task UpdateAsync(TEntity entity)
         {
-            DbContext.UpdateEntity(entity);
+            DbContext.UpdateEntity<TEntity, TKey>(entity);
             await SaveChangesAsync();
         }
 
         public async Task DeleteAsync(TEntity entity)
         {
-            DbContext.RemoveEntity(entity);
+            DbContext.RemoveEntity<TEntity, TKey>(entity);
             await SaveChangesAsync();
 
         }
@@ -113,5 +118,6 @@ namespace OnlineStore.Domain
         {
             return DbContext.SaveChangesAsync();
         }
+
     }
 }

@@ -5,7 +5,7 @@
         <div class="col-md-6">
             <div class="content">
                 <div class="product-logo">
-                    <img src="@Url.Action("GetImageProductById", "Home", new { productID = Model.ProductID })">
+                    <img src="@Url.Action("GetImageProductById", "Home", new { productID = Model.Id })">
                 </div>
                 <label>Price: @Html.DisplayFor(x=>x.UnitPrice)</label>
                 <button class="btn btn-default pull-right">Buy</button>

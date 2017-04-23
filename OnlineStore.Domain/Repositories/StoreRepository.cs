@@ -37,7 +37,7 @@ namespace OnlineStore.Domain
         
         public  Products GetProduct(int productId)
         {
-            return  db.Products.FirstOrDefault(x => x.ProductID == productId);
+            return  db.Products.FirstOrDefault(x => x.Id == productId);
         }
     }
 }

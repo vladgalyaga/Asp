@@ -7,7 +7,7 @@ namespace OnlineStore.Domain
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class Categories: IKeyable
+    public partial class Categories : IKeyable<int>
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Categories()
@@ -17,6 +17,14 @@ namespace OnlineStore.Domain
 
         [Key]
         public int CategoryID { get; set; }
+
+        public int Id
+        {
+            get
+            {
+                return CategoryID;
+            }
+        }
 
         [Required]
         [StringLength(15)]

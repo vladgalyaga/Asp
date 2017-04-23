@@ -17,7 +17,7 @@ namespace OnlineStore.Domain
             m_DbContext = dbContext;
         }
 
-        protected override IRepository<TEntity> CreateSpecificRepository<TEntity>()
+        protected override IRepository<TEntity, TKey> CreateSpecificRepository<TEntity, TKey>()
         {
             //if (typeof(TEntity) == typeof(Users))
             //    return new UsersRepository(m_DbContext) as IRepository<TEntity>;
@@ -25,7 +25,7 @@ namespace OnlineStore.Domain
             //if (typeof(TEntity) == typeof(Roles))
             //    return new RolesRepository(m_DbContext) as IRepository<TEntity>;
 
-            return base.CreateSpecificRepository<TEntity>();
+            return base.CreateSpecificRepository<TEntity, TKey>();
         }
     }
 }

@@ -21,45 +21,45 @@ namespace OnlineStore.Domain
             m_Repositories = new Hashtable();
         }
 
-        public IRepository<TEntity> GetRepository<TEntity>() where TEntity : class, IKeyable
+        public IRepository<TEntity, TKey> GetRepository<TEntity, TKey>() where TEntity : class, IKeyable<TKey>
         {
             string typeName = typeof(TEntity).Name;
             if (m_Repositories.ContainsKey(typeName))
             {
-                return (IRepository<TEntity>)m_Repositories[typeName];
+                return (IRepository<TEntity, TKey>)m_Repositories[typeName];
             }
 
-            IRepository<TEntity> repository = CreateRepository<TEntity>();
+            IRepository<TEntity, TKey> repository = CreateRepository<TEntity, TKey>();
             m_Repositories.Add(typeName, repository);
 
             return repository;
         }
 
-        protected virtual IRepository<TEntity> CreateSpecificRepository<TEntity>() where TEntity : class, IKeyable
+        protected virtual IRepository<TEntity, TKey> CreateSpecificRepository<TEntity, TKey>() where TEntity : class, IKeyable<TKey>
         {
             return null;
         }
 
-        private IRepository<TEntity> CreateRepository<TEntity>() where TEntity : class, IKeyable
+        private IRepository<TEntity, TKey> CreateRepository<TEntity, TKey>() where TEntity : class, IKeyable<TKey>
         {
             //ThrowIfSetDoesNotExist<TEntity>();
 
-            IRepository<TEntity> repository = CreateSpecificRepository<TEntity>();
+            IRepository<TEntity, TKey> repository = CreateSpecificRepository<TEntity, TKey>();
             if (repository != null)
             {
                 return repository;
             }
-            Type repositoryType = typeof(EntityRepository<>);
+            Type repositoryType = typeof(EntityRepository<,>);
 
-            repository = (IRepository<TEntity>)Activator.CreateInstance(
-                repositoryType.MakeGenericType(typeof(TEntity)), m_DbContext);
+            repository = (IRepository<TEntity, TKey>)Activator.CreateInstance(
+                repositoryType.MakeGenericType(typeof(TEntity), typeof(TKey)), m_DbContext);
 
             return repository;
         }
 
-        private void ThrowIfSetDoesNotExist<TEntity>() where TEntity : class, IKeyable
+        private void ThrowIfSetDoesNotExist<TEntity, TKey>() where TEntity : class, IKeyable<TKey>
         {
-            if (!m_DbContext.IsSetExist<TEntity>())
+            if (!m_DbContext.IsSetExist<TEntity,TKey>())
             {
                 throw new ArgumentException
                     ($"Can't get repository for {typeof(TEntity).FullName}"
